@@ -1,0 +1,6 @@
+FILE sat.txt CONTAINS LOCATION DATA
+FOR 31 SATELLITES 
+31 listed in file sat.txt taken 1:30 pm, June 12, 2019 from data at
+https://in-the-sky.org/satmap_worldmap.php 
+listed in numbered order at site except no GPS 4 present on map
+latitude and longitude to nearest degree, altitude in km 
