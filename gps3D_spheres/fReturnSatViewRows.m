@@ -7,15 +7,18 @@ function rowView = fReturnSatViewRows(sat,xyz,xyzRec,re,degdel)
     % input re is radius of spherical earth in meters
     % input degdel is angle (deg) above horizon that satellite must be in
     %   order to be in view 
-    % output is row numbers of satellites in view of receiver
+    % output are row numbers of satellites in view of receiver
+    %
     % uses trigonometric law of cosines
-    % see reference on triangle solutions, e.g., 
-    % https://www.ajdesigner.com/phptriangle/scalene_triangle_median_ma.php  
+    % we know the lengths of all 3 sides of triangle defined by receiver, 
+    % satellite, and earth center (coordinate origin), so we can solve for 
+    % any angle - see reference on triangle solutions, e.g., 
+    % https://www.ajdesigner.com/phptriangle/scalene_triangle_median_ma.php 
     
     % dRec contains distances from satellites to receiver at xyzRec
     dRec = fDistance(xyz,xyzRec);
     
-    % dOrig contains distances from sats to earth center (coord origin)
+    % dOrig contains distances from satellites to earth center (coord origin)
     dOrig = re + sat(:,3); 
     
     num = re^2 + dRec.^2 - dOrig.^2;
