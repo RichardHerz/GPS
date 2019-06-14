@@ -12,7 +12,8 @@ function rowView = fReturnSatViewRows(sat,xyz,xyzRec,re,degdel)
     % uses trigonometric law of cosines
     % we know the lengths of all 3 sides of triangle defined by receiver, 
     % satellite, and earth center (coordinate origin), so we can solve for 
-    % any angle - see reference on triangle solutions, e.g., 
+    % any angle - here want angle (90+gamma) between sat-rec side and rec-origin side
+    % see reference on triangle solutions, e.g., 
     % https://www.ajdesigner.com/phptriangle/scalene_triangle_median_ma.php 
     
     % dRec contains distances from satellites to receiver at xyzRec
