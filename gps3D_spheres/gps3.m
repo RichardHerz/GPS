@@ -17,12 +17,13 @@ re = 6370; % (km), radius of our circular earth
 % use actual average radius = 6,370 kilometres (3,960 mi)
 % per wikipedia https://en.wikipedia.org/wiki/Earth_radius
 
-% specify lat and long of receiver (altitude = 0)
+% specify lat and long of receiver in degrees (altitude assumed == 0)
 % and 3 satellites (altitude > 0 & on order of 20,000 km)
 % these move and are not geosynchronous 
 
 % specify GPS receiver latitude, longitude and altitude (altitude must == 0)
-rec = [0,0,0];
+% San Diego, CA, USA is 32.7, -117
+rec = [32.7,-117,0];
 [x,y,z] = fLatLongToXYZ(rec, re);
 xyzRec = [x,y,z];
 
@@ -47,9 +48,13 @@ xyz = [x, y, z];
 % fprintf('\n')
 
 % get only satellites above horizon and in view of receiver
-rView = fReturnSatViewRows(xyz,xyzRec);
+% degdel = degree change in lat or long around receiver
+%   which gives approx degree above horizon required for sat to be in view
+%   to eliminate satellites just above horizon
+degdel = 10; 
+rView = fReturnSatViewRows(xyz,xyzRec,rec,re,degdel);
+
 xyz = xyz(rView,:);
-sat = sat(rView,:);
 
 [r c] = size(xyz);
 
@@ -131,6 +136,9 @@ C3(21,21) = 10;
 % 
 
 surf(rep*x,rep*y,rep*z, C2)
+n = 4.2;
+axis([ -n n -n n -n n ])
+axis off
 % colorbar
 
 xyzp = xyz * (rep/re); % scale satellite xyz for sphere offsets
@@ -138,21 +146,27 @@ sp = 0.02; % scale factor for small sphere to represent satellite
 [r c] = size(xyz);
 
 % view(xyzp(1,:)) % along direction of one satellite xyzp(n,:)
-view(45,20) % azimuth angle (deg) from -y axis, elevation angle (deg)
+view(-130,30) % azimuth angle (deg) from -y axis, elevation angle (deg)
+view(160,30) % azimuth angle (deg) from -y axis, elevation angle (deg)
 
 hold on 
+
+% small sphere to represent GPS receiver on earth surface
+spp = 6*sp;
+mesh(spp*x+xyzRec(1)/re, spp*y+xyzRec(2)/re, spp*z+xyzRec(3)/re, C3)
 
 for n = 1:r; % selected row numbers of satellites in view to plot
     
     % large sphere of radius of satellite to receiver
-    if (n == 1)
-     % mesh(rp(n)*x+xyzp(n,1),rp(n)*y+xyzp(n,2),rp(n)*z+xyzp(n,3)) 
+    if (n == 4) % ((n == 9) || (n == 8))
+     mesh(rp(n)*x+xyzp(n,1),rp(n)*y+xyzp(n,2),rp(n)*z+xyzp(n,3)) 
     end
     
     % small sphere to represent satellites themselves
+%     if (n == 4)
     mesh(sp*rp(n)*x+xyzp(n,1),sp*rp(n)*y+xyzp(n,2),sp*rp(n)*z+xyzp(n,3), C3)
     hidden off
-    
+%     end
     % from adding line to plot by hand and generating code:
     % but probably the xy are for xy projection for the view() specified
     % QUESTION - is there an option to use xyz?
