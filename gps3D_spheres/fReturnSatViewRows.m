@@ -1,110 +1,28 @@
-function rowView = f_NEW_ReturnSatViewRows(xyz,xyzRec,rec,re,degdel) 
-    % parses satellite xyz (# sat row x 3 col matrix) and returns only those
-    % above horizon of receiver at xyzRec (row vector of 3 col) 
+function rowView = fReturnSatViewRows(sat,xyz,xyzRec,re,degdel) 
+    % returns row numbers of satellites > degdel degrees above horizon 
+    % input sat is latitude, longitude and altitude of satellites
+    %   with each satellite data in a row of these matrices
     % input xyz is matrix of satellite xyz locations (each sat in a row)
     % input xyzRec is row vector of xyz location of GPS receiver
-    % input rec is latitude, longitude, and altitude of GPS receiver
-    % where altitude of receiver must == 0 in this program
     % input re is radius of spherical earth in meters
-    % input degdel is degree change in lat or long around receiver loc 
-    %   which gives approx degree above horizon required for sat to be in view
-    %   to eliminate satellites just above horizon
-    % output is rows of xyz for which satellites are in view of receiver
+    % input degdel is angle (deg) above horizon that satellite must be in
+    %   order to be in view 
+    % output is row numbers of satellites in view of receiver
+    % uses trigonometric law of cosines
+    % see reference on triangle solutions, e.g., 
+    % https://www.ajdesigner.com/phptriangle/scalene_triangle_median_ma.php  
     
-    % get equations of planes that are tangent to spherical earth at 
-    % locations surrounding xyzRec to require sat to be some min angle
-    % above horison
-    % xyzRec(1) * x + xyzRec(2) * y + xyzRec(3) * z = p
-    % at xyz = xyzRec, this is eqn for square of distance of xyz from 0,0,0
-    % p = sum(xyzRec.^2, 2); % sum option 2 to sum rows 
+    % dRec contains distances from satellites to receiver at xyzRec
+    dRec = fDistance(xyz,xyzRec);
     
-    % look at 4 locations surrounding receiver and require satellite
-    % to be visible from all those locations as way of trying to ensure
-    % each satellite is at a minimum elevation from horizon
-    % 
-    % would be better to see if satellites inside a cone with vertex at GPS loc
-    %
-    xyzDel = zeros([4 3]);
-    % change lat by + del
-    recDel = rec;
-    recDel(1) = recDel(1) + degdel;
-    [x,y,z] = fLatLongToXYZ(recDel, re);
-    xyzDel(1,:) = [x,y,z];
-    % change lat by - del
-    recDel = rec;
-    recDel(1) = recDel(1) - degdel;
-    [x,y,z] = fLatLongToXYZ(recDel, re);
-    xyzDel(2,:) = [x,y,z];
-    % change long by + del
-    recDel = rec;
-    recDel(2) = recDel(2) + degdel;
-    [x,y,z] = fLatLongToXYZ(recDel, re);
-    xyzDel(3,:) = [x,y,z];
-    % change long by - del
-    recDel = rec;
-    recDel(2) = recDel(2) - degdel;
-    [x,y,z] = fLatLongToXYZ(recDel, re);
-    xyzDel(4,:) = [x,y,z];
+    % dOrig contains distances from sats to earth center (coord origin)
+    dOrig = re + sat(:,3); 
     
-    p = sum(xyzDel.^2, 2); % sum option 2 to sum rows
+    num = re^2 + dRec.^2 - dOrig.^2;
+    denom = 2 * re * dRec;
+    gamma = -90 + acosd(num ./ denom);
     
-    % for each satellite xy, determine z of tangent plane and compare to 
-    % satellite z
-    % for receiver at lat > 0 (North), sat z must be > tangent z
-    % for receiver at equator (lat == 0), any z is good
-    % for receiver at lat < 0 (South) sat z must be < tangent z 
-    
-    % compute satellite z on receiver's tangent plane for satellite x,y 
-    
-    % initialize array for row numbers (needed in case none found)
-    rowView = [];
-    
-    % WARNING: lat of receiver (+/- degdel) == 0 gives z == 0 & division by zero
-    % in equation, so add small change of +1 cm to receiver (+/- degdel) z 
-    for n = 1:4
-        if (xyzDel(n,3) == 0)
-            xyzDel(n,3) = 0.01; % local value only, not changed in main
-        end
-    end
-    
-    % repeat for each satellite
-    [r c] = size(xyz);
-    
-    for s = 1:r
-        
-        flag = true; % if stays true then sat is above all planes 
-        
-        % repeat through tangent planes of 4 locations around receiver
-        for n = 1:4 
-            % get z of satellite s for this tangent plane n
-            zplane = (p(n) - xyzDel(n,1) .* xyz(s,1) - xyzDel(n,2) .* xyz(s,2)) ./ xyzDel(n,3);
-            % now want z > zplane for receiver (+/- degdel) in northern hemisphere
-            % z < zplane for receiver (+/- degdel) in southern hemisphere 
-            if xyzDel(n,3) > 0
-                % receiver (+/- degdel) in Northern hemisphere
-                % want satellites whose z > zplane
-                if xyz(s,3) < zplane
-                    flag = false;
-                end
-            else
-                % receiver (+/- degdel) in Southern hemisphere
-                % none at equator at z == 0 because of +1 cm offset added above
-                % find satellites whose z < zplane
-                if xyz(s,3) > zplane
-                    flag = false;
-                end
-            end
-        end % end of repeat for sat s for all 4 horizons
-
-        if (flag == true) 
-            % sat s is above 4 horizons
-            % append to column list of sat in view
-            rowView = [rowView; s];
-        end
- 
-    end % end of repeat through all satellites s
-       
-    % return row numbers of satellites in view above receiver's horizon
-    % return rowView
+    % find and return satellite row numbers where gamma >= degdel
+    rowView = find(gamma >= degdel)
     
   

@@ -22,7 +22,7 @@ re = 6370; % (km), radius of our circular earth
 % these move and are not geosynchronous 
 
 % specify GPS receiver latitude, longitude and altitude (altitude must == 0)
-% San Diego, CA, USA is 32.7, -117
+% San Diego, CA, USA is rec = [32.7,-117,0];
 rec = [32.7,-117,0];
 [x,y,z] = fLatLongToXYZ(rec, re);
 xyzRec = [x,y,z];
@@ -48,11 +48,9 @@ xyz = [x, y, z];
 % fprintf('\n')
 
 % get only satellites above horizon and in view of receiver
-% degdel = degree change in lat or long around receiver
-%   which gives approx degree above horizon required for sat to be in view
-%   to eliminate satellites just above horizon
+% degdel = minimum degree above horizon required for sat to be in view
 degdel = 10; 
-rView = fReturnSatViewRows(xyz,xyzRec,rec,re,degdel);
+rView = fReturnSatViewRows(sat,xyz,xyzRec,re,degdel);
 
 xyz = xyz(rView,:);
 
@@ -62,8 +60,8 @@ fprintf('%i satellites IN VIEW xyz: \n', r)
 % fprintf('%4.3e, %4.3e, %4.3e \n',xyz')
 % fprintf('\n')
 % 
-% fprintf('%i satellites IN VIEW lat, long, alt: \n', r)
-% fprintf('%4.0f, %4.0f, %4.0f \n',sat')
+fprintf('%i satellites IN VIEW lat, long, alt: \n', r)
+fprintf('%4.0f, %4.0f, %4.0f \n',sat(rView,:)')
 fprintf('\n')
 
 % r's are distances from satellites in view in xyz to receiver at xyzRec
