@@ -1,5 +1,6 @@
 function c = fCcoef(xyz,r,re)
-    % inputs r are distances from receiver at xyz(1,:) to satellites at xyz(n,:)
+    % input xyz are locations of satellites (each row is one satellite) 
+    % input r are distances from satellites to receiver
     % input re is radius of spherical earth
     % returns vector of coefficients for matrix solution 
     % option 2 for sum( ,2) sums each row

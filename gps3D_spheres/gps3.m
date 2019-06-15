@@ -1,4 +1,4 @@
-% simplified GPS 
+% simplified GPS in MATLAB
 % 3D system with 3 or more satellites
 % assumes earth is spherical with center at xyz = 0,0,0
 % assumes receiver is on surface of earth
@@ -13,7 +13,7 @@
 clc
 clear all
 
-re = 6370; % (km), radius of our circular earth
+re = 6370; % (km), radius of our spherical earth
 % use actual average radius = 6,370 kilometres (3,960 mi)
 % per wikipedia https://en.wikipedia.org/wiki/Earth_radius
 
@@ -79,8 +79,9 @@ r = fDistance(xyz,xyzRec);
 % distance of each satellite from receiver
 
 % FIND:
-%  lat and long of receiver on earth's surface
-% matrix equation is A * xyz = c
+% lat and long of receiver on earth's surface
+
+% matrix equation for sphere intersections is A * xyz = c
 A = xyz;
 c = fCcoef(xyz,r,re);
 
@@ -100,7 +101,8 @@ fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc)
 [latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc', re);
 
 fprintf('rec loc: lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
-fprintf('rec cal: lat, long, alt, %6.3f, %6.3f, %4.3e \n', latCalc, longCalc, altCalc)
+fprintf('rec cal: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
+    latCalc, longCalc, altCalc)
 
 % now plot earth and at least one satellite 
 

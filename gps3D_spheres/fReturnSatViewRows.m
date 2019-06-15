@@ -27,6 +27,6 @@ function rowView = fReturnSatViewRows(sat,xyz,xyzRec,re,degdel)
     gamma = -90 + acosd(num ./ denom);
     
     % find and return satellite row numbers where gamma >= degdel
-    rowView = find(gamma >= degdel)
+    rowView = find(gamma >= degdel);
     
   
