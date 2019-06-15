@@ -56,7 +56,7 @@ xyz = xyz(rView,:);
 
 [r c] = size(xyz);
 
-fprintf('%i satellites IN VIEW xyz: \n', r)
+% fprintf('%i satellites IN VIEW xyz: \n', r)
 % fprintf('%4.3e, %4.3e, %4.3e \n',xyz')
 % fprintf('\n')
 % 
@@ -81,14 +81,14 @@ r = fDistance(xyz,xyzRec);
 % FIND:
 % lat and long of receiver on earth's surface
 
-% matrix equation for sphere intersections is A * xyz = c
-A = xyz;
+% matrix equation for sphere intersections is A * xyzCalc = c
+A = xyz; % xyz of satellites
 c = fCcoef(xyz,r,re);
 
-% solve for xyzCalc = x,y,z location of GPS receiver
-% this was specified above in setup of problem so check
-% if A and c have 3 rows for 3 satellites, then xyzCalc = inv(A)*c may work
-% if A and c have > 3 rows, then must use xyzCalc = A\c
+% solve for xyzCalc = calculated xyz location of GPS receiver
+% xyz location of GPS receiver was specified above in setup of problem
+% if A and c have 3 rows for 3 satellites, then xyzCalc = inv(A)*c works
+% if A and c have > 3 rows, then must use xyzCalc = A \ c
 
 % xyzCalc = inv(A) * c; % OK only for A and c rows == 3
 xyzCalc = A \ c; % OK for A and c rows >= 3
@@ -100,8 +100,8 @@ fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc)
 % note input argument xyzCalc' since xyzCalc is col vec and need row vec
 [latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc', re);
 
-fprintf('rec loc: lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
-fprintf('rec cal: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
+fprintf('location:   lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
+fprintf('calculated: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
     latCalc, longCalc, altCalc)
 
 % now plot earth and at least one satellite 
