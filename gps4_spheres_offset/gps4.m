@@ -96,8 +96,8 @@ rMEAS = r - offSET;
 % matrix equation for sphere intersections is A * xyzCalc = c
 A = [xyz rMEAS]; % xyz of satellites
 c = fCcoef(xyz,rMEAS,re);
-% assume offset << sat distance to rec & use same func fCcoef 
-% but now input rMEAS not r
+% assume offset << sat distance to receiver (drop offSET^2 term) & 
+% use same func fCcoef but now input rMEAS not r
 
 % solve for xyzCalc = calculated xyz location of GPS receiver
 % xyz location of GPS receiver was specified above in setup of problem
