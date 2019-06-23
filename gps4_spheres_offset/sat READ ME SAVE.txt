@@ -1,0 +1,154 @@
+FILE sat.txt CONTAINS LOCATION DATA
+FOR 31 SATELLITES 
+31 listed in file sat.txt taken 1:30 pm, June 12, 2019 from data at
+https://in-the-sky.org/satmap_worldmap.php 
+listed in numbered order at site except no GPS 4 present on map
+latitude and longitude to nearest degree, altitude in km 
+
+=================
+
+GPS satellites - map - in orbit - operational 
+
+MAP with current latitude, longitude and altitude (31 shown June 12, 2019)
+https://in-the-sky.org/satmap_worldmap.php   
+
+current status - not all operational at all times https://tycho.usno.navy.mil/gpscurr.html - see link: GPS constellation and individual satellite status is updated every working day.
+
+list of GPS satellites https://en.wikipedia.org/wiki/List_of_GPS_satellites 
+
+As of December 2018, 73 Global Positioning System navigation satellites have been launched, 31 of which are operational, 9 in reserve, 1 being tested, 30 have been retired and 2 were lost at launch. The constellation requires a minimum of 24 operational satellites, and the official target count is 33.  
+
+=================
+
+FROM gpstd.txt DOWNLOADED June 13, 2019 FROM https://tycho.usno.navy.mil/gpscurr.html 
+
+                  UNITED STATES NAVAL OBSERVATORY (USNO)
+  
+                        GPS CONSTELLATION STATUS
+  
+************************************************************************
+     Information in this file is retained for approximately seven 
+     days or until completion of the event; be aware that the  
+     information provided below may change.
+************************************************************************
+
+A.  BLOCK II/IIA/IIR/IIR-M INDIVIDUAL SATELLITE STATUS
+
+SVN  PRN
+34   18  Launched 26 OCT 1993; usable 20 MAR 2018; operating on Rb std
+           Unusable 07 Jun 1531 UT to 1532 UT
+             (NANU 2019084/07 JUN)
+           Unusable 11 Jun 1523 UT to 1524 UT
+             (NANU 2019087/11 JUN)
+36   04  Launched 10 MAR 1994; operating on Rb std
+43   13  Launched 23 JUL 1997; usable 31 JAN 1998; operating on Rb std
+44   28  Launched 16 JUL 2000; usable 17 AUG 2000; operating on Rb std
+45   21  Launched 31 MAR 2003; usable 12 APR 2003; operating on Rb std
+46   11  Launched 07 OCT 1999; usable 03 JAN 2000; operating on Rb std
+47   22  Launched 21 DEC 2003; usable 12 JAN 2004; operating on Rb std
+48   07  Launched 15 MAR 2008; usable 24 MAR 2008; operating on Rb std
+50   05  Launched 17 AUG 2009; usable 27 AUG 2009; operating on Rb std
+51   20  Launched 11 MAY 2000; usable 01 JUN 2000; operating on Rb std
+52   31  Launched 25 SEP 2006; usable 12 OCT 2006; operating on Rb std
+           Scheduled unusable 04 Jan 0905 UT to 2105 UT for
+             repositioning maintenance (NANU 2018074)
+           Outage cancelled for day 004
+             (NANUs 2018074, 2019003/03 JAN)
+           Outage cancelled for day 004
+             (NANUs 2018074, 2019003/03 JAN)
+           Outage cancelled for day 004
+             (NANUs 2018074, 2019003/03 JAN)
+53   17  Launched 26 SEP 2005; usable 16 DEC 2005; operating on Rb std
+55   15  Launched 17 OCT 2007; usable 31 OCT 2007; operating on Rb std
+56   16  Launched 29 JAN 2003; usable 18 FEB 2003; operating on Rb std
+           Unusable 21 Dec 1304 UT until further notice
+             (NANU 2018071)
+57   29  Launched 20 DEC 2007; usable 02 JAN 2008; operating on Rb std
+58   12  Launched 17 NOV 2006; usable 13 DEC 2006; operating on Rb std
+59   19  Launched 20 MAR 2004; usable 05 APR 2004; operating on Rb std
+60   23  Launched 23 JUN 2004; usable 09 JUL 2004; operating on Rb std
+61   02  Launched 06 NOV 2004; usable 22 NOV 2004; operating on Rb std
+62   25  Launched 28 MAY 2010; usable 27 AUG 2010; operating on Rb std
+           Scheduled unusable 11 Dec 0535 UT to 1735 UT for
+             repositioning maintenance (NANU 2018057)
+           Outage cancelled for day 345
+             (NANUs 2018057, 2018060/11 DEC)
+63   01  Launched 16 JUL 2011; usable 14 OCT 2011; operating on Rb std
+64   30  Launched 21 FEB 2014; usable 30 MAY 2014; operating on Rb std
+           Unusable 06 Jun 1222 UT to 1723 UT due to 
+             maintenance (NANUs 2019080, 2019083/06 JUN)
+65   24  Launched 04 OCT 2012; usable 14 NOV 2012; operating on Cs std
+66   27  Launched 15 MAY 2013; usable 21 JUN 2013; operating on Rb std
+           Unusable 07 Oct 0807 UT until further notice
+             (NANU 2018044)
+67   06  Launched 17 MAY 2014; usable 10 JUN 2014; operating on Rb std
+68   09  Launched 02 AUG 2014; usable 17 SEP 2014; operating on Rb std
+69   03  Launched 29 OCT 2014; usable 12 DEC 2014; operating on Rb std
+           Unusable 07 Jun 1600 UT to 1601 UT
+             (NANU 2019085/07 JUN)
+           Unusable 08 Jun 1600 UT to 1601 UT
+             (NANU 2019086/08 JUN)
+70   32  Launched 05 FEB 2016; usable 09 MAR 2016; operating on Rb std
+71   26  Launched 25 MAR 2015; usable 20 APR 2015; operating on Rb std
+72   08  Launched 15 JUL 2015; usable 12 AUG 2015; operating on Cs std
+73   10  Launched 31 OCT 2015; usable 09 DEC 2015; operating on Rb std
+74   04  Launched 23 DEC 2018; operating on Rb std
+
+B.  GPS ACTIVITIES
+ 1. CNAV Testing
+    Air Force Space Command  will be implementing  CNAV messages on the GPS L2C
+    and L5 signals  beginning J118/ 1430Z with updates from the control segment
+    approximately  twice per week.   The message populated  signal content will
+    include  broadcast  message  types  (MT) 10, 11, 30, and 33.   There are no
+    planned GPS  satellite outages  or degradations for this activity.  L2C and
+    L5 CNAV messages should be transparent to GPS receivers that do not process
+    L2C  or  L5  CNAV  messages.   These  populated  signals  are  intended  to
+    facilitate user familiarization and development of compatible user
+    equipment.  
+
+    NOTE:   Until  further  notice,  the  L2C  and L5  signals  are  considered
+    pre-operational.  A pre-operational signal means the availability and other
+    characteristics   of  the   broadcast  signal   may  not  comply  with  all
+    requirements  of  the  relevant   interface  specifications  and  should be
+    employed at the users' own risk. Therefore these signals should not be used
+    for safety-of-life or other critical purposes.  Any military or civil users
+    who encounter  user equipment problems following  message population of the
+    L2C and L5 signals  should contact  the applicable POCs identified below as
+    soon as  possible.   Aviation users  should file  reports  consistent  with
+    FAA-approved procedures.
+
+    UPDATE:  Additionally, the CNAV message health bits will indicate that the
+    L1 and L2 signals are healthy, but that the L5 signal is unhealthy.  The
+    cnav message health bits may function independently from the legacy message
+    health bits and should not be considered reliable indicators of signal
+    quality or performance during pre-operational use.
+
+    POC: Civilian - NAVCEN at 703-313-5900, http://www.navcen.uscg.gov
+    Military - GPS Operations Center at https://gps.afspc.af.mil/gpsoc,
+      DSN 560-2541, COMM 719-567-2541,
+      gpsoperationscenter@us.af.mil, https://gps.afspc.af.mil 
+    Military Alternate - Joint Space Operations Center, DSN 276-3514
+
+ 3. Coordinated Universal Time (UTC) Time Step (Leap Second)
+    A Leap Second will be added on 31 December, 2016.  Beginning 1 January,
+    2017, GPS will be ahead of UTC by EIGHTEEN (+18) seconds.
+
+ 4. Implementation of Selective Availability (SA)
+    a. SA was reactivated on July 1, 1991 at 0400 UT. Civil users will receive 
+	Standard Positioning Service (SPS) accuracy as specified in the Federal
+        Radionavigation Plan (FRP).  POC for policy:  CDR Jackson at
+        DSN 692-2634 or (719) 554-2634. (NANU 121-91182/DTG 011354Z JUL 91)
+    b. According to the 2nd Satellite Operations Squadron (2SOPS)
+        Operational Advisory Bulletin:  SA was implemented on November 15,
+        1991 to the SPS level.
+    c. SA was permanently deactivated on May 2, 2000 at 0400 UT.
+ 
+
+For information concerning:   BLOCK II       see file . . . . . GPSB2
+                              GPS SYSTEM     see file . . . . . GPSSY
+                              TIME TRANSFER  see file . . . . . GPSTT
+
+--  
+File gpstd.txt
+last updated
+Wed Jun 12 11:01:09 UTC 2019
