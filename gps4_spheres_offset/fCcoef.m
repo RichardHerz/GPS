@@ -5,5 +5,4 @@ function c = fCcoef(xyz,r,re)
     % returns vector of coefficients for matrix solution 
     % option 2 for sum( ,2) sums each row
     
-    c = ( (re^2 + sum(xyz.^2, 2) - r.^2) / 2 );
-    
+    c = ( re^2 + sum(xyz.^2, 2) - r.^2 ) / 2 ;    

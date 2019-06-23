@@ -1,15 +1,18 @@
 % simplified GPS in MATLAB
 % 3D system with 4 or more satellites
+%
+% receiver may be at positive altitude above Earth surface
+%
 % assumes earth is spherical with center at xyz = 0,0,0
-% assumes receiver is on surface of spherical earth
+% but altitude could later be corrected for nonspherical Earth
+% in functions fLatLongToXYZ, fXYZtoLatLong
+%
 % assumes receiver clock *NOT* synchronized but *OFFSET*
 % from satellite clocks so minimum of 4 satellites needed 
 % uses functions
-%  fLatLongToXYZ, fXYZtoLatLong, fReturnSatViewRows, fDistance, fCcoeff
+%  fLatLongToXYZ, fXYZtoLatLong, fReturnSatViewRows, fDistance, fGPS5_sse
+%  
 % uses data file sat.txt, which contains satellite locations 
-%
-% NOTE: receiver on surface of spherical earth allows unique linear
-% algebra solution with 4 satellites and receiver clock NOT sync'd to sats
 
 % BEGIN SETUP OF PROBLEM
 
@@ -20,8 +23,9 @@ re = 6370; % (km), radius of our spherical earth
 % use actual average radius = 6,370 kilometres (3,960 mi)
 % per wikipedia https://en.wikipedia.org/wiki/Earth_radius
 
-% SPECIFY GPS receiver lat (deg), long (deg) and altitude (km, alt must == 0)
-% San Diego, CA, USA is rec = [32.7,-117,0];
+% SPECIFY GPS receiver lat (deg), long (deg) & altitude (km)
+% San Diego, CA, USA on ground is rec = [32.7,-117,0]; % deg, deg, km
+% altitude of receiver here may be >= 0
 rec = [32.7,-117,0];
 [x,y,z] = fLatLongToXYZ(rec, re);
 xyzRec = [x,y,z];
@@ -31,7 +35,7 @@ xyzRec = [x,y,z];
 % 31 listed in file sat.txt taken 1:30 pm, June 12, 2019 from data at
 % https://in-the-sky.org/satmap_worldmap.php 
 % listed in numbered order at site except no GPS 4 present on map
-load sat.txt 
+load sat.txt
 
 % SPECIFY CLOCK OFFSET DISTANCE = offset time * speed of light
 % 1 nanosecond (ns) offset = approx. 1 foot = approx. 0.0003 km
@@ -90,21 +94,23 @@ rMEAS = r - offSET;
 % FIND:
 % lat and long of receiver on earth's surface
 
-% matrix equation for sphere intersections is A * xyzCalc = c
-A = [xyz rMEAS]; % xyz of satellites
-c = fCcoef(xyz,rMEAS,re);
-% assume offset << sat distance to receiver (drop offSET^2 term) & 
-% use same func fCcoef but now input rMEAS not r
+% do nonlinear multi-variable fitting
 
-% solve for xyzCalc = calculated xyz location of GPS receiver
-% xyz location of GPS receiver was specified above in setup of problem
-% if A and c have 4 rows for 4 satellites, then xyzCalc = inv(A)*c works
-% if A and c have > 4 rows, then must use xyzCalc = A \ c
+% set initial guess g of results
+% 0's did not work, 10's may work
+[x,y,z] = fLatLongToXYZ([10,10,10],re);
+g = [ [x,y,z], 10 ];
 
-% xyzCalc = inv(A) * c; % OK only for A and c rows == 4
-xyzCalc = A \ c; % OK for A and c rows >= 4
+xyzCalc = fminsearch('fGPS5_sse', g, [], xyz, rMEAS);
 
-% WITH CLOCK OFFSET, xyzCalc is now a 4x1 matrix = [x; y; z; offSET]
+% fminsearch is a standard MATLAB function
+% fGPS5_sse is user-written function in file fGPS5_sse.m
+% input [] selects default options, and is needed to also supply
+% additional inputs to fGPS5_sse, which are xyz, rMEAS
+
+% WITH CLOCK OFFSET, xyzCalc is now a 1x4 matrix = [x y z offSET]
+
+% NOTE: xyzCalc in gps4 was 4x1 matrix
 
 fprintf('rec loc xyz, %4.3e, %4.3e, %4.3e,\n',xyzRec)
 fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc(1:3))
@@ -113,7 +119,8 @@ fprintf('clock offset distance = %6.1f km \n\n',xyzCalc(4));
 
 % NOW COMPUTE receiver lat and long
 % note input argument xyzCalc' since xyzCalc is col vec and need row vec
-[latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc(1:3)', re);
+
+[latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc(1:3), re);
 
 fprintf('location:   lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
 fprintf('calculated: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
