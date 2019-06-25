@@ -26,7 +26,7 @@ re = 6370; % (km), radius of our spherical earth
 % SPECIFY GPS receiver lat (deg), long (deg) & altitude (km)
 % San Diego, CA, USA on ground is rec = [32.7,-117,0]; % deg, deg, km
 % altitude of receiver here may be >= 0
-rec = [32.7,-117,0];
+rec = [32.7, -117, 100];
 [x,y,z] = fLatLongToXYZ(rec, re);
 xyzRec = [x,y,z];
 
@@ -97,9 +97,11 @@ rMEAS = r - offSET;
 % do nonlinear multi-variable fitting
 
 % set initial guess g of results
-% 0's did not work, 10's may work
-[x,y,z] = fLatLongToXYZ([10,10,10],re);
-g = [ [x,y,z], 10 ];
+% use one of the sat in view - will be in correct region of globe
+satg = sat(rView,:);
+satg = [satg(1,1:2), 0]; % take 1st sat lat and long but use low altitude
+[x,y,z] = fLatLongToXYZ(satg,re);
+g = [ [x,y,z], 10 ]; % last element is init guess of clock distance offset
 
 xyzCalc = fminsearch('fGPS5_sse', g, [], xyz, rMEAS);
 
@@ -108,7 +110,7 @@ xyzCalc = fminsearch('fGPS5_sse', g, [], xyz, rMEAS);
 % input [] selects default options, and is needed to also supply
 % additional inputs to fGPS5_sse, which are xyz, rMEAS
 
-% WITH CLOCK OFFSET, xyzCalc is now a 1x4 matrix = [x y z offSET]
+% WITH CLOCK DISTANCE OFFSET, xyzCalc is now a 1x4 matrix = [x y z offSET]
 
 % NOTE: xyzCalc in gps4 was 4x1 matrix
 
