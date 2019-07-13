@@ -13,7 +13,7 @@ function fMakePatch3D(p,c)
     z = p(3,:);
 
     [row col] = size(p);
-    % should be 4 rows, and integer multiple of 3 columns for triangles  
+    % should be integer multiple of 3 columns for triangles  
     np = col/3;
  
     for j = 1:np

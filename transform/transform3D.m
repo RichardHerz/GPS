@@ -1,5 +1,4 @@
 % Examples of transformations of 3D graphic objects
-% 
 % ReactorLab.net 2019 
 
 % uses user-written function fMakePatch3D 
@@ -22,9 +21,14 @@ p = []; % initialize point matrix
 % enter first triangle's vertex points 
 % each point is a column: x; y; z; 1
 
-% NOTE the last element "1" allows a constant to be added to any of the
-%      xyz directions in order to translate a point when a transform
-%      matrix is multiplied times the point matrix 
+% NOTE this form allows the object to be transformed by matrix
+%      multiplying a transformation matrix times the object 
+%      point matrix, where transformations include translation, 
+%      rotation, scaling, and shearing
+
+% NOTE the last element "1" allows a constant to be added to any of
+%      the xyz directions in order to translate a point when a
+%      transformation matrix is multiplied times the point matrix 
 
 % may be easier to first enter each xyz point in a row...
 t = [0 0 0
@@ -112,7 +116,6 @@ fprintf('by using successive transformations, \n')
 fprintf('we can move the object along any desired path\n')
 
 fMakePatch3D(pp,c)
-
 
 %% listing of user-written function fMakePatch3D 
 
