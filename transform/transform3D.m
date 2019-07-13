@@ -11,15 +11,9 @@ clear all
 
 %% define original 3D object 
 
-% in this example, we will generate an object using only triangle 
-% polygons - in this case, 4 triangles to make a tetrahedron 
-
 p = []; % initialize point matrix
 
-% in our point matrix, each three columns defines a triangle
-
-% enter first triangle's vertex points 
-% each point is a column: x; y; z; 1
+% each point in the point matrix will be a column: x; y; z; 1
 
 % NOTE this form allows the object to be transformed by matrix
 %      multiplying a transformation matrix times the object 
@@ -30,14 +24,18 @@ p = []; % initialize point matrix
 %      the xyz directions in order to translate a point when a
 %      transformation matrix is multiplied times the point matrix 
 
+% in this example, we will generate an object using only triangles 
+% in our point matrix, each three columns defines a triangle
+% we will enter 4 triangles to make a tetrahedron
+
+% enter first triangle's vertex points 
+
 % may be easier to first enter each xyz point in a row...
 t = [0 0 0
     1 0.5 0
     0 1 0];
-% then invert... 
-t = t';
-% then augment with row of 1's
-t = [t; 1 1 1];
+% then invert and augment with a row of 1's
+t = [t'; 1 1 1];
 
 % finally, augment previous point matrix with new triangle
 p = [p t];
