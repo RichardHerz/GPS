@@ -1,4 +1,4 @@
-function fMakePatch3D(p,c)
+function fPlotTriangles3D(p,c)
     % plot multiple triangle surfaces in p using colors in c
     %
     % this function is specific to input matrix p containing separate
