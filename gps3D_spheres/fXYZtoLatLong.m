@@ -1,5 +1,5 @@
-function [lat, long, a] = fXYZtoLatLong(xyz,r) 
-    % rows of input xyz are x, y, z coordinates of a location
+function latLongAlt = fXYZtoLatLong(xyz,r) 
+    % rows of input COLUMN VECTOR xyz are x, y, z coordinates of a location
     % input r is radius of spherical earth centered at 0,0,0
     % a is altitude of location above surface of earth 
     % North latitude 0 to +90 degrees 
@@ -11,12 +11,13 @@ function [lat, long, a] = fXYZtoLatLong(xyz,r)
     % longitude
     %   https://en.wikipedia.org/wiki/Longitude
     
-    ra = sqrt(sum(xyz.^2, 2)); % distance from earth center, opt 2 sums each row
+    ra = sqrt(sum(xyz.^2, 1)); % distance from earth center
+    % sum(  ,1) option 1 sums each column
     a = ra - r; % altitude above earth surface
     
-    x = xyz(:,1);
-    y = xyz(:,2);
-    z = xyz(:,3);
+    x = xyz(1);
+    y = xyz(2);
+    z = xyz(3);
       
     psi = asind(z ./ ra); % 90 - psi here == phi in fLatLongToXYZ 
     lat = psi;
@@ -36,3 +37,5 @@ function [lat, long, a] = fXYZtoLatLong(xyz,r)
     i = find(long >= 360);
     long(i) = long(i) - 360;
     
+    latLongAlt = [lat, long, a]; % return as one matrix
+        

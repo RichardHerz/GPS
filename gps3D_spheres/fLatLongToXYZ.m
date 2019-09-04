@@ -1,5 +1,5 @@
-function [x,y,z] = fLatLongToXYZ(latLongAlt, r) 
-    % rows of input latLongAlt are latitude, longitude, altitude above
+function xyz = fLatLongToXYZ(latLongAlt, r) 
+    % rows of input array latLongAlt are latitude, longitude, altitude above
     %   earth surface
     % input r is radius of spherical earth centered at 0,0,0 
     % North latitude 0 to +90 degrees 
@@ -32,3 +32,4 @@ function [x,y,z] = fLatLongToXYZ(latLongAlt, r)
     y = ra .* sind(phi) .* sind(theta);
     z = ra .* cosd(phi);
     
+    xyz = [x,y,z]; % return as one matrix

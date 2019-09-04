@@ -23,8 +23,7 @@ re = 6370; % (km), radius of our spherical earth
 % SPECIFY GPS receiver lat (deg), long (deg) and altitude (km, alt must == 0)
 % San Diego, CA, USA is rec = [32.7,-117,0];
 rec = [32.7,-117,0];
-[x,y,z] = fLatLongToXYZ(rec, re);
-xyzRec = [x,y,z];
+xyzRec = fLatLongToXYZ(rec,re);
 
 % SPECIFY >= 4 satellite latitude (deg), longitude (deg), altitude (km)
 % satellites move and are not geosynchronous 
@@ -44,8 +43,7 @@ fprintf('%i satellites TOTAL lat, long, alt: \n' , r)
 fprintf('\n')
 
 % get x,y,z coordinates of satellites
-[x, y, z] = fLatLongToXYZ(sat,re);
-xyz = [x, y, z];
+xyz = fLatLongToXYZ(sat,re);
 
 [r c] = size(xyz);
 % fprintf('%i satellites TOTAL xyz: \n', r)
@@ -112,12 +110,11 @@ fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc(1:3))
 fprintf('clock offset distance = %6.1f km \n\n',xyzCalc(4));
 
 % NOW COMPUTE receiver lat and long
-% note input argument xyzCalc' since xyzCalc is col vec and need row vec
-[latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc(1:3)', re);
+latLongAltCalc = fXYZtoLatLong(xyzCalc, re);
 
 fprintf('location:   lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
 fprintf('calculated: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
-    latCalc, longCalc, altCalc)
+    latLongAltCalc)
 
 % now plot earth and at least one satellite 
 

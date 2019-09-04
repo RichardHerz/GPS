@@ -27,8 +27,7 @@ re = 6370; % (km), radius of our spherical earth
 % San Diego, CA, USA on ground is rec = [32.7,-117,0]; % deg, deg, km
 % altitude of receiver here may be >= 0
 rec = [32.7, -117, 100];
-[x,y,z] = fLatLongToXYZ(rec, re);
-xyzRec = [x,y,z];
+xyzRec = fLatLongToXYZ(rec, re);
 
 % SPECIFY >= 4 satellite latitude (deg), longitude (deg), altitude (km)
 % satellites move and are not geosynchronous 
@@ -48,8 +47,7 @@ fprintf('%i satellites TOTAL lat, long, alt: \n' , r)
 fprintf('\n')
 
 % get x,y,z coordinates of satellites
-[x, y, z] = fLatLongToXYZ(sat,re);
-xyz = [x, y, z];
+xyz = fLatLongToXYZ(sat,re);
 
 [r c] = size(xyz);
 % fprintf('%i satellites TOTAL xyz: \n', r)
@@ -100,8 +98,8 @@ rMEAS = r - offSET;
 % use one of the sat in view - will be in correct region of globe
 satg = sat(rView,:);
 satg = [satg(1,1:2), 0]; % take 1st sat lat and long but use low altitude
-[x,y,z] = fLatLongToXYZ(satg,re);
-g = [ [x,y,z], 10 ]; % last element is init guess of clock distance offset
+xyzg = fLatLongToXYZ(satg,re);
+g = [ xyzg, 10 ]; % last element is init guess of clock distance offset
 
 xyzCalc = fminsearch('fGPS5_sse', g, [], xyz, rMEAS);
 
@@ -114,19 +112,16 @@ xyzCalc = fminsearch('fGPS5_sse', g, [], xyz, rMEAS);
 
 % NOTE: xyzCalc in gps4 was 4x1 matrix
 
+% NOW COMPUTE receiver lat and long
+% note transform to put 1st input into column vector required by function
+latLongAltCalc = fXYZtoLatLong(xyzCalc(1:3)', re);
+
 fprintf('rec loc xyz, %4.3e, %4.3e, %4.3e,\n',xyzRec)
 fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc(1:3))
-
 fprintf('clock offset distance = %6.1f km \n\n',xyzCalc(4));
-
-% NOW COMPUTE receiver lat and long
-% note input argument xyzCalc' since xyzCalc is col vec and need row vec
-
-[latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc(1:3), re);
-
 fprintf('location:   lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
 fprintf('calculated: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
-    latCalc, longCalc, altCalc)
+    latLongAltCalc)
 
 % now plot earth and at least one satellite 
 

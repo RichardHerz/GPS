@@ -24,8 +24,7 @@ re = 6370; % (km), radius of our spherical earth
 % specify GPS receiver latitude, longitude and altitude (altitude must == 0)
 % San Diego, CA, USA is rec = [32.7,-117,0];
 rec = [32.7,-117,0];
-[x,y,z] = fLatLongToXYZ(rec, re);
-xyzRec = [x,y,z];
+xyzRec = fLatLongToXYZ(rec,re);
 
 % specify >= 3 satellite latitude (deg), longitude (deg), altitude (km)
 % 31 listed in file sat.txt taken 1:30 pm, June 12, 2019 from data at
@@ -39,8 +38,7 @@ fprintf('%i satellites TOTAL lat, long, alt: \n' , r)
 fprintf('\n')
 
 % get x,y,z coordinates of satellites
-[x, y, z] = fLatLongToXYZ(sat,re);
-xyz = [x, y, z];
+xyz = fLatLongToXYZ(sat,re);
 
 [r c] = size(xyz);
 % fprintf('%i satellites TOTAL xyz: \n', r)
@@ -97,12 +95,11 @@ fprintf('rec loc xyz, %4.3e, %4.3e, %4.3e,\n',xyzRec)
 fprintf('rec cal xyz, %4.3e, %4.3e, %4.3e,\n\n', xyzCalc)
 
 % NOW COMPUTE receiver lat and long
-% note input argument xyzCalc' since xyzCalc is col vec and need row vec
-[latCalc, longCalc, altCalc] = fXYZtoLatLong(xyzCalc', re);
+latLongAltCalc = fXYZtoLatLong(xyzCalc, re);
 
 fprintf('location:   lat, long, alt, %6.3f, %6.3f, %4.3e \n', rec)
 fprintf('calculated: lat, long, alt, %6.3f, %6.3f, %4.3e \n', ...
-    latCalc, longCalc, altCalc)
+    latLongAltCalc)
 
 % now plot earth and at least one satellite 
 
