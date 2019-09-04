@@ -1,0 +1,14 @@
+You are given, for several satellites, their latitude, longitude, altitude above earth, and their distance from the receiver. Copy and paste that data into an array in Matlab. Then you can extract the first three columns to be the array of satellite coordinates (lat, long, alt) and extract the 4th column to be the column vector of the satellite-to-receiver distances (r1, r2, etc., in notes - radii of imaginary spheres with each satellite at center and receiver somewhere on sphere surface ).
+
+The array for the satellite coordinates plus the given radius of the earth, re, can be used as input to the function newLatLongToXYZ which I supplied to you, attached to the HW5 assignment. That function returns an array of the xyz coordinates of the satellites, with each satellite's data in a row of the array.
+
+The blackboards for August 29th, page with "Spherical Earth" at the top, has the equations you need. They are equations for spheres, each with satellite at center and receiver on sphere surface. Their intersection at x,y,z is the receiver coordinates.
+
+The xyz coordinates of satellite 1 (row 1) are written there as x1,y1,z1 and the distance of satellite 1 to the receiver is r1 (from column 4 of the data given). Satellite 2 data are x2,y2,z2 and distance r2. You see the pattern. The unknown xyz coordinates of the receiver are x,y,z.
+
+Set up the A and c arrays as shown on the blackboard, then solve for the unknown vector u (receiver x;y;z in column vector) as shown.
+
+Then you can send the receiver xyz and the earth radius, re, as inputs to the function newXYZtoLatLong that I supplied to you to get the receiver latitude and longitude.
+
+Aug 29, 2019 Blackboard at
+http://reactorlab.net/resources/matlab/ceng-15-nano-15/
