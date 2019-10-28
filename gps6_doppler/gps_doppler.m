@@ -81,15 +81,32 @@ for sf = 0.2:0.1:0.8
     hold on
 
 end
+
+% plot one line with "direct equation" below
+sf = 0.62;
+% have option to modify altitude to check for hyperboloid surface...
+sap = 1 * sa; % <<< MODIFY altitude to sap
+g1 = 1:2000;
+g2 = sqrt( (g1.^2 + sap^2) / (1/sf^2 - 1) ); % <<< note sap 
+plot(g1,g2,'k-.')
+
 hold off
 axis([0 2000 0 3000])
 title('lines of constant Doppler shift under LEO satellite')
 ylabel('g2 = direction of satellite travel')
 xlabel('g1 = direction normal to satellite travel')
 % -----------------------------
+% for measured sf's at receivers, eqns for sf's from known sat locations and altitudse
+% each has one unkowns (g1 from coordinate origin) when receiver on flat earth ground.
+% So need signals from at least two satellites for flat earth with parallel sat track.
+% Have three unknowns (adding unknown receiver altitude) when receiver at altitude,
+% so need at least one more satellite signal.
+% -----------------------------
 % DIRECT EQN g1 function of g2
 % g1^2 = g2^2*(1/sf^2 - 1) - sa^2 
-% THESE LINES OF CONSTANT DOPPLER SHIFT sf ARE HYPERBOLAS
+% or, rearranged
+% g2^2 = (g1^2 + sa^2) / (1/sf^2 - 1)
+% THESE LINES OF CONSTANT DOPPLER SHIFT ARE HYPERBOLAS
 % for y = g1 and x = g2
 % x^2/a^2 - y^2/b^2 = 1 
 % which is hyperbola eqn at 
@@ -113,3 +130,10 @@ xlabel('g1 = direction normal to satellite travel')
 % which gives relationship between g1 and g2 for
 % constant shift factor sf and constant satellite altitude sa 
 % -----------------------------
+
+% DOES NOT LOOK LIKE const sf is on hyperboloid.
+% At GPS receiver at same altitude as satellite, 
+% const sf is on diagonal away from sat with sat at one vertex of
+% right triangle while other side of triangle from sat is sat track.
+% This is also what is seen above when adjust sa to sap in direct eqn line on plot. 
+
