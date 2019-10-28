@@ -61,6 +61,8 @@ sf = g2/h3
 % HERE specify g2 and compute g1
 % ALTERNATIVELY can specify g1 and compute g2
 
+% SEE EQUATIONS BELOW WHICH SHOWS THESE ARE HYPERBOLAS 
+
 for sf = 0.2:0.1:0.8
 
     % min g2 for h3 approaches sa is g2 approaches sf * sa
@@ -80,8 +82,34 @@ for sf = 0.2:0.1:0.8
 
 end
 hold off
-% NOTE: these curves may be hyperbolic?
 axis([0 2000 0 3000])
 title('lines of constant Doppler shift under LEO satellite')
 ylabel('g2 = direction of satellite travel')
 xlabel('g1 = direction normal to satellite travel')
+% -----------------------------
+% DIRECT EQN g1 function of g2
+% g1^2 = g2^2*(1/sf^2 - 1) - sa^2 
+% THESE LINES OF CONSTANT DOPPLER SHIFT sf ARE HYPERBOLAS
+% for y = g1 and x = g2
+% x^2/a^2 - y^2/b^2 = 1 
+% which is hyperbola eqn at 
+% https://en.wikipedia.org/wiki/Hyperbola#Hyperbola_in_Cartesian_coordinates
+% where a^2 = sa^2/(1/sf^2 - 1)
+% where b^2 = sa^2 
+% WHERE DIRECT EQN FROM
+% sf = g2/h3 from constant Doppler shift factor sf
+% where h3 is direct line from satellite to GPS ground station
+% where g2 is length on ground (and at satellite altitude) of 
+% ground track from satellite to normal of track thru the GPS ground station
+% rearrange and square
+% h3^2 = g2^2/sf^2 
+% h3^2 = g2^2 + h1^2 Pythagorean theorem
+% where h1 is hypotenuse with sa and g1 as sides
+% combine above two eqns
+% h1^2 = g2^2*(1/sf^2 - 1)
+% h1^2 = sa^2 + g1^2 Pythagorean theorem
+% combine above two 
+% g1^2 = g2^2*(1/sf^2 - 1) - sa^2 
+% which gives relationship between g1 and g2 for
+% constant shift factor sf and constant satellite altitude sa 
+% -----------------------------
