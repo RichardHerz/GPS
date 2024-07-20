@@ -1,3 +1,3 @@
 A variety of Matlab models of increasing complexity: 2D with flat Earth, 2D with circular Earth, 3D with receiver on spherical Earth and clock sync'd to satellites (gps3D), receiver clock with unknown offset and receiver on surface of spherical earth (gps4), receiver clock offset and receiver at altitude (gps5), GPS from Doppler shift of Iridium-like Low Earth Orbit (LEO) satellite signal (gps6).
 
-![GPS-image-github](http://reactorlab.net/graphics/github_media/GPS-read-me.png) 
+![GPS-image-github](https://github.com/RichardHerz/GPS/blob/master/images/GPS-read-me.png) 
